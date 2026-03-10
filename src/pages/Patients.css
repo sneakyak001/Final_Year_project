@@ -1,0 +1,147 @@
+.patients-page {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 8px;
+}
+
+.controls-card {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    align-items: center;
+}
+
+.expanded-search {
+    flex: 1;
+    max-width: none;
+}
+
+.patients-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 24px;
+}
+
+.patient-card {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.patient-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.patient-card:hover::before {
+    opacity: 1;
+}
+
+.patient-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.patient-basic-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.l-avatar {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.patient-card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+
+.ai-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+    background: var(--accent-danger-light);
+    border-radius: var(--border-radius-sm);
+    border-left: 3px solid var(--accent-danger);
+}
+
+.ai-alert-icon {
+    color: var(--accent-danger);
+    margin-top: 2px;
+}
+
+.ai-alert-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.patient-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+}
+
+.border-t {
+    border-top: 1px solid var(--border-color);
+}
+
+.pt-4 {
+    padding-top: 16px;
+}
+
+.icon-btn-small {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-surface-hover);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: all var(--transition-fast);
+}
+
+.patient-card:hover .icon-btn-small {
+    background: var(--primary);
+    color: white;
+    transform: translateX(4px);
+}

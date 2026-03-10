@@ -1,0 +1,210 @@
+.login-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #020617;
+}
+
+.login-canvas-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.login-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, transparent 0%, rgba(2, 6, 23, 0.78) 100%);
+}
+
+/* ── Login Card ─────────────────────────────────────────────────── */
+.login-box {
+    width: 100%;
+    max-width: 430px;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: 0 28px 64px -12px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(200, 215, 255, 0.3);
+}
+
+/* ── Header ─────────────────────────────────────────────────────── */
+.login-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.login-logo-wrap {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-logo {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #1d4ed8, #0284c7);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
+    position: relative;
+    z-index: 1;
+}
+
+.login-logo-ring {
+    position: absolute;
+    inset: -6px;
+    border-radius: 22px;
+    border: 1.5px solid rgba(37, 99, 235, 0.25);
+    animation: logo-ring-pulse 3s ease infinite;
+}
+
+@keyframes logo-ring-pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: scale(1.08);
+        opacity: 0.15;
+    }
+}
+
+/* ── Hint box ───────────────────────────────────────────────────── */
+.login-hint-box {
+    background: #F0F9FF;
+    border: 1px solid #BAE6FD;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.hint-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: #0369A1;
+    font-weight: 500;
+}
+
+/* ── Form ───────────────────────────────────────────────────────── */
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Input with icon */
+.input-icon-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 12px;
+    color: var(--text-muted);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.input-with-icon {
+    padding-left: 36px;
+}
+
+.input-with-icon-right {
+    padding-right: 40px;
+}
+
+.input-icon-right-btn {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    border-radius: 4px;
+    transition: color 0.15s;
+    z-index: 1;
+}
+
+.input-icon-right-btn:hover {
+    color: var(--text-main);
+}
+
+/* Error banner */
+.login-error-banner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent-danger-light);
+    color: var(--accent-danger);
+    border: 1px solid #FECACA;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+/* Remember me */
+.login-remember-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.remember-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+}
+
+.remember-checkbox {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    accent-color: var(--accent-blue);
+    cursor: pointer;
+}
+
+/* Submit */
+.login-submit-btn {
+    padding: 13px;
+    font-size: 15px;
+    border-radius: 10px;
+}
+
+/* Footer note */
+.login-footer-note {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-lighter);
+    margin-top: 20px;
+    letter-spacing: 0.02em;
+}
