@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Users, Activity, Stethoscope, LogOut } from 'lucide-react';
+import { LayoutDashboard, Users, Activity, Stethoscope, LogOut, Bot } from 'lucide-react';
 import { gsap } from 'gsap';
 import { useAuth } from '../context/AuthContext';
 import './Sidebar.css';
@@ -17,6 +17,7 @@ export default function Sidebar() {
         { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
         { name: 'Patients', path: '/patients', icon: Users },
         { name: 'AI Analysis', path: '/ai-analysis', icon: Activity },
+        { name: 'AI Agents', path: '/agents', icon: Bot },
     ];
 
     useEffect(() => {

@@ -164,7 +164,7 @@ export default function AdminDashboard() {
     };
 
     // ── Nav tabs ──────────────────────────────────────────────────────────────
-    const navTabs: { id: Tab; label: string; Icon: React.ElementType; badge?: number }[] = [
+    const navTabs: { id: Tab; label: string; Icon: any; badge?: number }[] = [
         { id: 'overview', label: 'System Overview', Icon: LayoutDashboard },
         { id: 'doctors', label: 'Doctors', Icon: Stethoscope, badge: stats.totalDoctors },
         { id: 'staff', label: 'Medical Workers', Icon: HeartPulse, badge: stats.totalStaff },

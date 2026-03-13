@@ -2,6 +2,7 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { AuthProvider } from './context/AuthContext';
+import { AgentProvider } from './context/AgentContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { ToastProvider } from './components/Toast';
 
@@ -10,6 +11,7 @@ import Dashboard from './pages/Dashboard';
 import Patients from './pages/Patients';
 import PatientDetail from './pages/PatientDetail';
 import AiAnalysis from './pages/AiAnalysis';
+import AgentDashboard from './pages/AgentDashboard';
 import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
 import SplashScreen from './components/SplashScreen';
@@ -37,6 +39,7 @@ function AppContent() {
           <Route path="patients" element={<Patients />} />
           <Route path="patients/:id" element={<PatientDetail />} />
           <Route path="ai-analysis" element={<AiAnalysis />} />
+          <Route path="agents" element={<AgentDashboard />} />
         </Route>
 
         {/* 404 fallback */}
@@ -58,15 +61,17 @@ function App() {
 
   return (
     <AuthProvider>
-      <ToastProvider>
-        <AnimatePresence mode="wait">
-          {loading ? (
-            <SplashScreen key="splash" />
-          ) : (
-            <AppContent key="app-content" />
-          )}
-        </AnimatePresence>
-      </ToastProvider>
+      <AgentProvider>
+        <ToastProvider>
+          <AnimatePresence mode="wait">
+            {loading ? (
+              <SplashScreen key="splash" />
+            ) : (
+              <AppContent key="app-content" />
+            )}
+          </AnimatePresence>
+        </ToastProvider>
+      </AgentProvider>
     </AuthProvider>
   );
 }

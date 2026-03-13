@@ -48,6 +48,24 @@ export interface AuditLogRec {
     timestamp: number;
 }
 
+/** Agent execution log for one agent in a pipeline run */
+export interface AgentLogRec {
+    id?: number;
+    patientId: string;
+    agentName: string;
+    status: string;
+    durationMs: number;
+    timestamp: number;
+}
+
+/** Full AI pipeline report (JSON-serialised PipelineResult) */
+export interface AiReportRec {
+    id?: number;
+    patientId: string;
+    result: string;  // JSON string
+    timestamp: number;
+}
+
 /** Unified user record for authentication (admins + doctors + staff) */
 export interface UserRec {
     id: string;
@@ -83,6 +101,8 @@ const db = new Dexie('HMSDatabase') as Dexie & {
     users: EntityTable<UserRec, 'id'>;
     sessions: EntityTable<SessionRec, 'token'>;
     medicalWorkers: EntityTable<MedicalWorkerRec, 'id'>;
+    agentLogs: EntityTable<AgentLogRec, 'id'>;
+    aiReports: EntityTable<AiReportRec, 'id'>;
 };
 
 db.version(1).stores({
@@ -109,6 +129,17 @@ db.version(3).stores({
     medicalWorkers: 'id, email, department, designation, createdAt',
 });
 
+// Version 4 — adds AI agent logs and pipeline reports
+db.version(4).stores({
+    patients: 'id, name, risk, createdAt',
+    doctors: 'id, email, department, createdAt',
+    auditLogs: '++id, action, userId, timestamp',
+    users: 'id, email, role, createdAt',
+    sessions: 'token, userId, expiresAt',
+    medicalWorkers: 'id, email, department, designation, createdAt',
+    agentLogs: '++id, patientId, agentName, timestamp',
+    aiReports: '++id, patientId, timestamp',
+});
 
 
 // ── Web Crypto Helpers ────────────────────────────────────────────────────────
@@ -168,7 +199,7 @@ export async function createUser(
     email: string,
     plainPassword: string,
     name: string,
-    role: 'admin' | 'doctor',
+    role: 'admin' | 'doctor' | 'staff',
     options: { department?: string; createdBy?: string; mustChangePassword?: boolean } = {}
 ): Promise<UserRec> {
     const salt = generateHex(16);
