@@ -13,6 +13,7 @@ import PatientDetailScreen from '../screens/PatientDetailScreen';
 import AddPatientScreen from '../screens/AddPatientScreen';
 import DiagnoseScreen from '../screens/DiagnoseScreen';
 import SyncScreen from '../screens/SyncScreen';
+import AiImagingScreen from '../screens/AiImagingScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -46,6 +47,7 @@ function MainTabs() {
     >
       <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'HMS Home', tabBarLabel: 'Home' }} />
       <Tab.Screen name="Patients" component={PatientsScreen} options={{ title: 'Patients', tabBarLabel: 'Patients' }} />
+      <Tab.Screen name="Imaging" component={AiImagingScreen} options={{ title: 'AI Imaging Lab', tabBarLabel: 'Imaging' }} />
       <Tab.Screen name="Diagnose" component={DiagnoseScreen} options={{ title: 'AI Diagnosis', tabBarLabel: 'Diagnose' }} />
       <Tab.Screen name="Sync" component={SyncScreen} options={{ title: 'Data Sync', tabBarLabel: 'Sync' }} />
     </Tab.Navigator>

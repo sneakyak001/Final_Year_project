@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   View, Text, ScrollView, TouchableOpacity, StyleSheet, ActivityIndicator, Alert, TextInput
 } from 'react-native';
-import { runFullSync, getSyncServerUrl, setSyncServerUrl, getPendingSyncCount } from '../sync/syncManager';
+import { runFullSync, pullFromServer, getSyncServerUrl, setSyncServerUrl, getPendingSyncCount } from '../sync/syncManager';
 import { getSyncQueue, getLastSync } from '../database/db';
 import NetInfo from '@react-native-community/netinfo';
 import { SyncQueueItem } from '../database/schema';
@@ -46,6 +46,27 @@ export default function SyncScreen() {
     await setSyncServerUrl(serverUrl);
     setEditingUrl(false);
     Alert.alert('Saved', 'Sync server URL updated.');
+  };
+
+  const handleSeedAndPull = async () => {
+    setIsSyncing(true);
+    setSyncResult(null);
+    try {
+      const url = await getSyncServerUrl();
+      // 1. Seed demo patients on the server
+      const seedRes = await fetch(`${url}/api/seed`, { method: 'POST' });
+      const seedData = await seedRes.json();
+      if (!seedData.success) throw new Error('Seed failed on server');
+      // 2. Pull all data into local app
+      const result = await runFullSync();
+      setSyncResult({ pushed: result.pushed, pulled: result.pulled, error: result.error });
+      await load();
+      if (!result.error) Alert.alert('✅ Demo Data Loaded!', `Loaded ${result.pulled} patients from sync server. Check the Patients tab!`);
+    } catch (e: any) {
+      setSyncResult({ pushed: 0, pulled: 0, error: e.message || 'Failed to load demo data. Is the sync server running?' });
+    } finally {
+      setIsSyncing(false);
+    }
   };
 
   return (
@@ -99,6 +120,16 @@ export default function SyncScreen() {
         ) : (
           <Text style={styles.syncBtnText}>🔄  Sync Now</Text>
         )}
+      </TouchableOpacity>
+
+      {/* Demo Data Button */}
+      <TouchableOpacity
+        style={[styles.demoBtn, isSyncing && { opacity: 0.6 }]}
+        onPress={handleSeedAndPull}
+        disabled={isSyncing}
+      >
+        <Text style={styles.demoBtnText}>🏥  Load Demo Patients from Server</Text>
+        <Text style={styles.demoBtnSub}>Seeds 5 realistic patients & pulls them here</Text>
       </TouchableOpacity>
 
       {/* Pending Queue */}
@@ -190,8 +221,11 @@ const styles = StyleSheet.create({
   resultErr: { color: '#f87171', fontSize: 13 },
   resultSub: { color: '#6b7280', fontSize: 12, marginTop: 4 },
   resultStat: { color: '#d1d5db', fontSize: 13, marginBottom: 2 },
-  syncBtn: { backgroundColor: '#059669', borderRadius: 14, padding: 18, alignItems: 'center', flexDirection: 'row', justifyContent: 'center', marginBottom: 20 },
+  syncBtn: { backgroundColor: '#059669', borderRadius: 14, padding: 18, alignItems: 'center', flexDirection: 'row', justifyContent: 'center', marginBottom: 12 },
   syncBtnText: { color: '#fff', fontWeight: '700', fontSize: 16 },
+  demoBtn: { backgroundColor: '#2563eb', borderRadius: 14, padding: 16, alignItems: 'center', marginBottom: 20, borderWidth: 1, borderColor: '#3b82f6' },
+  demoBtnText: { color: '#fff', fontWeight: '700', fontSize: 15 },
+  demoBtnSub: { color: '#bfdbfe', fontSize: 11, marginTop: 4 },
   sectionTitle: { color: '#9ca3af', fontSize: 12, fontWeight: '600', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 10, marginTop: 4 },
   emptyCard: { backgroundColor: '#111827', borderRadius: 12, padding: 20, alignItems: 'center' },
   emptyText: { color: '#10b981', fontSize: 14 },

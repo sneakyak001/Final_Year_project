@@ -69,13 +69,12 @@ export default function HomeScreen() {
         <StatCard label="Low Risk" value={stats.low} color="#10b981" icon="🟢" />
       </View>
 
-      {/* Quick Actions */}
       <Text style={styles.sectionTitle}>Quick Actions</Text>
       <View style={styles.actionsRow}>
-        <QuickAction icon="➕" label="Add Patient" onPress={() => navigation.navigate('AddPatient')} color="#2563eb" />
+        <QuickAction icon="➕" label="Patient" onPress={() => navigation.navigate('AddPatient')} color="#2563eb" />
+        <QuickAction icon="🩻" label="Imaging" onPress={() => navigation.navigate('Imaging')} color="#eab308" />
         <QuickAction icon="🩺" label="Diagnose" onPress={() => navigation.navigate('Diagnose', {})} color="#7c3aed" />
         <QuickAction icon="🔄" label="Sync" onPress={() => navigation.navigate('Sync')} color="#059669" badge={syncPending} />
-        <QuickAction icon="📋" label="Patients" onPress={() => navigation.navigate('Patients')} color="#0891b2" />
       </View>
 
       {/* Recent Patients */}

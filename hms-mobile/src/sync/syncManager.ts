@@ -12,7 +12,7 @@ import { MobilePatient } from '../database/schema';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CONFIG_KEY = 'hms_sync_server_url';
-export const DEFAULT_SERVER_URL = 'http://192.168.1.100:3001'; // user can change in Settings
+export const DEFAULT_SERVER_URL = 'http://localhost:3001'; // default for same-machine localhost demo
 
 export async function getSyncServerUrl(): Promise<string> {
   const stored = await AsyncStorage.getItem(CONFIG_KEY);
@@ -48,7 +48,6 @@ export async function pullFromServer(): Promise<{ added: number; updated: number
   const existingMap = new Map(existing.map(p => [p.id, p]));
 
   let added = 0; let updated = 0;
-  const { saveAll } = await import('../database/db');
 
   for (const p of patients) {
     if (existingMap.has(p.id)) {
